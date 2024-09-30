@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton } from '@angular/material/button';
 
 @Directive({
   selector: 'button[mat-button]',
@@ -19,22 +20,16 @@ export class MatButtonDirective implements AfterViewInit {
 
     @Optional() private el: ElementRef,
     @Optional() private renderer: Renderer2,
-    @Optional() private matTooltip: MatTooltip
+    @Optional() private matTooltip: MatTooltip,
+    @Optional() private matButton: MatButton
   ) {
     this.matTooltip.message = "You don't have permission";
-  }
-
-  private reject(e: MouseEvent | SubmitEvent) {
-    e.stopPropagation();
-    return;
+    this.matButton.disabled = !this.userervice.hasPermission();
   }
 
   ngAfterViewInit(): void {
-    if (!this.userervice.hasPermission()) {
-      this.button.addEventListener('click', this.reject);
-      this.button.addEventListener('submit', this.reject);
+     if (!this.userervice.hasPermission()) {
       this.renderer.addClass(this.button, 'fake-disable');
-      this.renderer.addClass(this.button, 'mat-mdc-button-disabled');
-    }
+    } 
   }
 }
