@@ -1,0 +1,12 @@
+<app-top-panel></app-top-panel>
+@let $chartsData = (chartsData | async);
+
+@if ($chartsData) {
+    <mat-grid-list cols="3">
+    @for (item of $chartsData.charts | keyvalue; track item.key) {
+        <mat-grid-tile>
+            <app-chart [data]="item.value" [type]="item.key" [xAxis]="$chartsData.time"></app-chart>
+        </mat-grid-tile>
+    }
+    </mat-grid-list>
+}

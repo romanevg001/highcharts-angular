@@ -1,0 +1,33 @@
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <mat-form-field>
+      <mat-select [formControl]="activeColor">
+        <mat-option>None</mat-option>
+        @for(color of colors; track color) {
+        <mat-option [value]="color" [ngStyle]="{ 'background-color': color }">
+          &nbsp;
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <button
+      mat-button
+      (click)="switchToBar()"
+      matTooltip="{{ chartOptions?.series | json }}"
+    >
+      switch to Bar
+    </button>
+
+    @if (chartOptions) {
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="chartOptions"
+      [(update)]="updateFlag"
+      style="width: 100%; height: 400px; display: block"
+    ></highcharts-chart>
+
+    }
+
+    <!--  <div id="container"></div> -->
+  </mat-card-content>
+</mat-card>

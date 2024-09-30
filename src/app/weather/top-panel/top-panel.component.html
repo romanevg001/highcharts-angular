@@ -1,0 +1,37 @@
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Start date</mat-label>
+    <input matInput [matDatepicker]="start_date" formControlName="start_date" />
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="start_date"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #start_date></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>End date</mat-label>
+    <input matInput [matDatepicker]="end_date" formControlName="end_date" />
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="end_date"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #end_date></mat-datepicker>
+  </mat-form-field>
+
+  <mat-button-toggle-group
+    name="fontStyle"
+    aria-label="Font Style"
+    formControlName="location"
+  >
+    @for(item of weatherLocation; track item.latitude) {
+    <mat-button-toggle [value]="item">{{ item.city }}</mat-button-toggle>
+    }
+  </mat-button-toggle-group>
+
+  <section class="example-section" formGroupName="hourly">
+    @for(item of weatherTypeInfoEnum | keyvalue; track item.key) {
+    <mat-checkbox [formControlName]="item.key">{{ item.value }}</mat-checkbox>
+    }
+  </section>
+</form>
