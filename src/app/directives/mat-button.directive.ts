@@ -1,21 +1,40 @@
-import { Directive, Optional } from '@angular/core';
+import {
+  Directive,
+  Optional,
+  ElementRef,
+  Renderer2,
+  AfterViewInit,
+} from '@angular/core';
 import { UserService } from '../services/user.service';
-import { MatButtonModule, MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Directive({
   selector: 'button[mat-button]',
   standalone: true,
 })
-export class MatButtonDirective {
+export class MatButtonDirective implements AfterViewInit {
+  button: HTMLButtonElement = this.el.nativeElement;
   constructor(
     private userervice: UserService,
-    @Optional() private matButton: MatButton,
 
+    @Optional() private el: ElementRef,
+    @Optional() private renderer: Renderer2,
+    @Optional() private matTooltip: MatTooltip
   ) {
-    console.log('mat-button', this.matButton);
+    this.matTooltip.message = "You don't have permission";
+  }
 
-    
-    this.matButton.disabled = !this.userervice.hasPermission()
-   // this.matButton..disabled = !this.userervice.hasPermission()
+  private reject(e: MouseEvent | SubmitEvent) {
+    e.stopPropagation();
+    return;
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.userervice.hasPermission()) {
+      this.button.addEventListener('click', this.reject);
+      this.button.addEventListener('submit', this.reject);
+      this.renderer.addClass(this.button, 'fake-disable');
+      this.renderer.addClass(this.button, 'mat-mdc-button-disabled');
+    }
   }
 }

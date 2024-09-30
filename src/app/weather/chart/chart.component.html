@@ -1,11 +1,11 @@
 <mat-card appearance="outlined">
   <mat-card-content>
     <mat-form-field>
+      <mat-label>Color</mat-label>
       <mat-select [formControl]="activeColor">
-        <mat-option>None</mat-option>
         @for(color of colors; track color) {
-        <mat-option [value]="color" [ngStyle]="{ 'background-color': color }">
-          &nbsp;
+        <mat-option [value]="color">
+          {{color}} <span [ngStyle]="{ 'background-color': color }">&nbsp;&nbsp;&nbsp;</span>
         </mat-option>
         }
       </mat-select>
@@ -13,7 +13,7 @@
     <button
       mat-button
       (click)="switchToBar()"
-      matTooltip="{{ chartOptions?.series | json }}"
+      matTooltip
     >
       switch to Bar
     </button>
