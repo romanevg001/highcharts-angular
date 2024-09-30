@@ -64,7 +64,6 @@ export class TopPanelComponent {
     this.form.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((el) => {
-        console.log(el);
         this.weatherStore.update(el);
       });
   }

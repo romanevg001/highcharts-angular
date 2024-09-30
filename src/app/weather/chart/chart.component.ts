@@ -145,7 +145,6 @@ export class ChartComponent implements OnChanges {
   }
 
   switchToBar() {
-    console.log('switchToBar')
     if (this.chartOptions?.series) {
       this.chartOptions.series[0].type = 'bar';
     }

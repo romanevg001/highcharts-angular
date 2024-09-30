@@ -5,18 +5,15 @@
       <mat-select [formControl]="activeColor">
         @for(color of colors; track color) {
         <mat-option [value]="color">
-          {{color}} <span [ngStyle]="{ 'background-color': color }">&nbsp;&nbsp;&nbsp;</span>
+          {{ color }}
+          <span [ngStyle]="{ 'background-color': color }"
+            >&nbsp;&nbsp;&nbsp;</span
+          >
         </mat-option>
         }
       </mat-select>
     </mat-form-field>
-    <button
-      mat-button
-      (click)="switchToBar()"
-      matTooltip
-    >
-      switch to Bar
-    </button>
+    <button mat-button (click)="switchToBar()">switch to Bar</button>
 
     @if (chartOptions) {
     <highcharts-chart
